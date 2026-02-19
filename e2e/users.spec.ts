@@ -7,10 +7,11 @@ test.describe('Users Page', () => {
   });
 
   test('사용자 목록이 표시된다', async ({ page }) => {
+    // goto 전에 응답 리스너를 먼저 등록해야 이벤트를 놓치지 않음
+    const responsePromise = page.waitForResponse((res) => res.url().includes('/users') && res.status() === 200);
     await page.goto('/users');
+    await responsePromise;
 
-    // json-server 응답 대기 후 사용자 확인
-    await page.waitForResponse((res) => res.url().includes('/users') && res.status() === 200);
     await expect(page.getByText('John Doe')).toBeVisible();
     await expect(page.getByText('Jane Doe')).toBeVisible();
   });
