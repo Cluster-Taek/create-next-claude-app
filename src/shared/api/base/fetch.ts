@@ -9,10 +9,12 @@ let authToken: string | null = null;
  * AuthProvider에서 세션 변경 시 호출됨
  */
 export const setupClientAuth = (token: string | null) => {
+  /* v8 ignore start -- 서버 전용: happy-dom에서 도달 불가 */
   if (typeof window === 'undefined') {
     console.warn('setupClientAuth should only be called on client');
     return;
   }
+  /* v8 ignore stop */
   authToken = token;
 };
 
@@ -22,12 +24,14 @@ export const setupClientAuth = (token: string | null) => {
 const getAuthHeaders = async (): Promise<Record<string, string>> => {
   const isServer = typeof window === 'undefined';
 
+  /* v8 ignore start -- 서버 전용: happy-dom에서 도달 불가 */
   if (isServer) {
     const { getServerSession } = await import('next-auth');
     const { authOptions } = await import('@app/api/auth/[...nextauth]/auth-options');
     const session = await getServerSession(authOptions);
     return session?.user?.accessToken ? { Authorization: `Bearer ${session.user.accessToken}` } : {};
   }
+  /* v8 ignore stop */
 
   return authToken ? { Authorization: `Bearer ${authToken}` } : {};
 };
@@ -92,10 +96,12 @@ const request = async <T = object>(method: string, url: string, body?: Body, opt
     }
     const error = createFetchError(response.status, response.statusText, data);
 
+    /* v8 ignore start -- 서버 전용: happy-dom에서 도달 불가 */
     if (isServer) {
       console.error('Server API error:', { status: error.status, url, method });
       throw error;
     }
+    /* v8 ignore stop */
     return handleApiError(error);
   }
 

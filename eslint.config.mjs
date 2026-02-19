@@ -7,6 +7,7 @@ import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import reactCompiler from 'eslint-plugin-react-compiler';
+import testingLibrary from 'eslint-plugin-testing-library';
 
 const eslintConfig = defineConfig([
   // Next.js 공식 설정 (React, Hooks, Next.js 규칙 포함)
@@ -118,6 +119,12 @@ const eslintConfig = defineConfig([
       'prefer-const': 'warn',
       'no-var': 'error',
     },
+  },
+
+  // Testing Library (테스트 파일에만 적용)
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    ...testingLibrary.configs['flat/react'],
   },
 
   // 무시할 파일
