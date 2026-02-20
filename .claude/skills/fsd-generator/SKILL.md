@@ -97,3 +97,4 @@ export { fetchFn } from './api/nameApi';
 ## References
 
 - [references/templates.md](references/templates.md) - 세그먼트별 코드 템플릿
+- [references/api-patterns.md](references/api-patterns.md) - Server Prefetch, Mutation, Query Key, Pageable 패턴
