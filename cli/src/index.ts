@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import { createProject } from './template.js';
+import { isCommandAvailable } from './utils.js';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import fs from 'fs-extra';
+import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -18,11 +20,26 @@ const program = new Command();
 program
   .name('create-next-claude-app')
   .description('Create a new Next.js project with Feature-Sliced Design architecture')
-  .version(packageJson.version, '-v, --version', 'Output the current version')
+  .option('-v, --version', 'Output version and environment info')
   .argument('[project-name]', 'Name of the project to create')
   .option('--no-install', 'Skip dependency installation')
   .option('--no-git', 'Skip git initialization')
   .action(async (projectName: string | undefined, options: any) => {
+    if (options.version) {
+      const hasPnpm = await isCommandAvailable('pnpm');
+      const hasGit = await isCommandAvailable('git');
+
+      console.log();
+      console.log(chalk.bold.cyan('create-next-claude-app') + chalk.white(` v${packageJson.version}`));
+      console.log();
+      console.log(chalk.gray('  Node.js  ') + process.version);
+      console.log(chalk.gray('  OS       ') + `${os.platform()}-${os.arch()}`);
+      console.log(chalk.gray('  pnpm     ') + (hasPnpm ? chalk.green('available') : chalk.yellow('not found')));
+      console.log(chalk.gray('  git      ') + (hasGit ? chalk.green('available') : chalk.yellow('not found')));
+      console.log();
+      return;
+    }
+
     console.log();
     console.log(chalk.bold.cyan('create-next-claude-app') + chalk.gray(' v' + packageJson.version));
     console.log();
