@@ -97,6 +97,11 @@
     "npm": ">=10.0.0"
   },
   "packageManager": "pnpm@9.15.4+sha256.9bee59c7313a216722c079c1e22160dea7f88df4e0c3450b1d7b01b882336c6a",
+  "pnpm": {
+    "overrides": {
+      "minimatch@<5": "^5.1.6"
+    }
+  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
