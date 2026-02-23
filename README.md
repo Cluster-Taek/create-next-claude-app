@@ -1,100 +1,98 @@
-This is a [Next.js](https://nextjs.org) boilerplate project with Feature-Sliced Design architecture.
+# create-next-claude-app
+
+Next.js 16 + Feature-Sliced Design boilerplate and CLI scaffolding tool.
+
+![Hero Banner](./docs/images/hero-banner.png)
 
 ## Quick Start
-
-The easiest way to create a new project with this boilerplate:
 
 ```bash
 npx create-next-claude-app my-app
 cd my-app
-pnpm mock
-pnpm dev
+pnpm mock && pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your app.
+> CLI options: [cli/README.md](./cli/README.md)
 
-For more CLI options, see [CLI documentation](./cli/README.md).
+## Tech Stack
 
-## Features
+| Area         | Technologies                                           |
+| ------------ | ------------------------------------------------------ |
+| Framework    | Next.js 16 (App Router) · React 19 · TypeScript 5.9    |
+| Styling      | Tailwind CSS v4                                        |
+| State & Data | Zustand · TanStack React Query · React Hook Form + Zod |
+| Auth         | NextAuth.js                                            |
+| Testing      | Vitest · Testing Library · Playwright                  |
+| DX           | ESLint · Prettier · Husky · Commitlint · Steiger       |
+| Build        | Turbopack · React Compiler                             |
 
-- [Next.js 16 (App Router)](https://nextjs.org)
-- [React 19](https://react.dev)
-- [TypeScript](https://www.typescriptlang.org)
-- [Feature-Sliced Design](https://feature-sliced.design) - Architectural methodology
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [Zustand](https://zustand-demo.pmnd.rs) - State management
-- [Auth.js](https://authjs.dev)
-- [JSON Server](https://github.com/typicode/json-server)
-- [Tanstack Query](https://tanstack.com/query/latest)
-- [React Hook Form](https://react-hook-form.com)
-- [Motion](https://motion.dev)
-- [React Icons](https://react-icons.github.io/react-icons)
+## Architecture
 
-## Manual Setup
+Built on [Feature-Sliced Design](https://feature-sliced.design). `app/` handles routing only; business logic lives in the `src/` FSD structure.
 
-If you want to clone this repository directly instead of using the CLI:
+```
+app/                    Next.js routing (page.tsx → re-exports from src/views)
+src/
+├── app/                Providers, initialization
+├── views/              Page compositions (Server Components)
+├── widgets/            Independent UI blocks
+├── features/           Business features (auth, modal, user-create)
+├── entities/           Business entities (user, account)
+└── shared/             api, ui, lib, model, config
+```
 
-First, run the development server:
+**Key rules**: Import top → bottom only · No same-layer imports · Access only via Public API (`index.ts`)
+
+## Environment Variables
 
 ```bash
 cp .env.example .env
-pnpm install
-pnpm prepare
 ```
 
+| Variable              | Description                                                              |
+| --------------------- | ------------------------------------------------------------------------ |
+| `NEXTAUTH_URL`        | Service URL (`http://localhost:3000`)                                    |
+| `NEXTAUTH_SECRET`     | NextAuth secret key ([generator](https://generate-secret.vercel.app/32)) |
+| `NEXT_PUBLIC_DOMAIN`  | Client domain                                                            |
+| `NEXT_PUBLIC_API_URL` | API server URL (`http://localhost:4001`)                                 |
+
+## Claude Code Skills
+
+![Skills workflow diagram](./docs/images/skills-workflow-banner.png)
+
+This project includes Claude Code skills for the development workflow.
+
+| Manual    | Role                       |     | Auto-activated        | Role               |
+| --------- | -------------------------- | --- | --------------------- | ------------------ |
+| `/tdd`    | Requirements → Tests (Red) |     | nextjs                | Error prevention   |
+| `/fsd`    | FSD scaffolding            |     | react-best-practices  | Performance        |
+| `/review` | Code review                |     | feature-sliced-design | Architecture guard |
+| `/commit` | Commit generation          |     | web-design-guidelines | UI/UX review       |
+
+**Workflow**: `/tdd` → `/fsd` → Implement → `/review` → `/commit`
+
+> Details: [.claude/skills/README.md](.claude/skills/README.md)
+
+## Manual Setup
+
+Clone directly instead of using the CLI:
+
 ```bash
+git clone https://github.com/Cluster-Taek/create-next-claude-app.git
+cd create-next-claude-app
+cp .env.example .env
+pnpm install && pnpm prepare
+pnpm mock    # separate terminal
 pnpm dev
 ```
 
-(Optional) Run the server to get the data from the json-server:
+## CI/CD
 
-```bash
-pnpm mock
-```
+- **E2E** (`e2e.yml`): `main` push/PR → Playwright tests
+- **Release** (`release.yml`): `release` push → semantic-release → npm publish
 
-| Key                 | Description                          | Example                                                       |
-| ------------------- | ------------------------------------ | ------------------------------------------------------------- |
-| NEXTAUTH_URL        | Service URL (usually domain)         | http://localhost:3000                                         |
-| NEXTAUTH_SECRET     | Random secret key                    | [random secret in web](https://generate-secret.vercel.app/32) |
-| NEXT_PUBLIC_DOMAIN  | Domain                               | http://localhost:3000                                         |
-| NEXT_PUBLIC_API_URL | API URL (json-server url in example) | http://localhost:4001                                         |
+> Release details: [cli/README.md](./cli/README.md#development)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## License
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Project Structure
-
-This project follows the [Feature-Sliced Design](https://feature-sliced.design) methodology. The structure is organized into layers:
-
-- `app/` - Next.js App Router pages
-- `src/app/` - Application layer (providers, layouts)
-- `src/entities/` - Business entities
-- `src/features/` - User features and interactions
-- `src/shared/` - Reusable shared code
-- `src/widgets/` - Large composite components
-
-Refer to the [Feature-Sliced Design documentation](https://feature-sliced.design/docs/get-started/overview) for more details on the architecture.
-
-## Development Tools
-
-This project includes several development tools:
-
-- **ESLint** - Code linting with Next.js and React best practices
-- **Prettier** - Code formatting with import sorting
-- **TypeScript** - Type checking
-- **Husky** - Git hooks for pre-commit checks
-- **lint-staged** - Run linters on staged files
-- **Commitlint** - Conventional commit message linting
-- **Steiger** - FSD architecture linting
-
-Run checks manually:
-
-```bash
-pnpm lint        # Run ESLint
-pnpm format      # Format code with Prettier
-pnpm type-check  # Run TypeScript type checking
-pnpm fsd         # Check FSD architecture compliance
-```
+MIT
