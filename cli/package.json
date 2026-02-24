@@ -1,6 +1,6 @@
 {
   "name": "create-next-claude-app",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "CLI tool to scaffold Next.js projects with Feature-Sliced Design architecture",
   "type": "module",
   "author": "Cluster-Taek",
