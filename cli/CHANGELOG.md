@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/Cluster-Taek/create-next-claude-app/compare/v1.4.0...v1.5.0) (2026-03-09)
+
+### Features
+
+* agent-browser 스킬 추가 ([46d1b8a](https://github.com/Cluster-Taek/create-next-claude-app/commit/46d1b8ad7012a6a9d7e1f6f74617ec2f10079ce1))
+
+### Bug Fixes
+
+* 스킬 README의 /browser 명령어를 /agent-browser로 수정 ([e19ff41](https://github.com/Cluster-Taek/create-next-claude-app/commit/e19ff416b1c51ea77af08b516cbbb4852879523e))
+* 템플릿 스크립트 실행 권한 부여 ([bf7021e](https://github.com/Cluster-Taek/create-next-claude-app/commit/bf7021e9f38557efd2351f0f86e2878e4da3934b))
+
 ## [1.4.0](https://github.com/Cluster-Taek/create-next-claude-app/compare/v1.3.0...v1.4.0) (2026-02-24)
 
 ### Features
