@@ -2,6 +2,8 @@
 
 Next.js 16 + Feature-Sliced Design boilerplate and CLI scaffolding tool.
 
+[한국어](./README.ko.md)
+
 ![Hero Banner](./docs/images/hero-banner.png)
 
 ## Quick Start
