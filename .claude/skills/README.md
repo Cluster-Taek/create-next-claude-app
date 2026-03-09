@@ -10,12 +10,13 @@
 
 ### 수동 호출 (Slash Command)
 
-| 명령      | 스킬                                    | 설명                                     | 레퍼런스                                                                                                     |
-| --------- | --------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `/tdd`    | [tdd](tdd/SKILL.md)                     | 요구사항 기반 TDD 테스트 생성 (Red 단계) | [interview-guide](tdd/references/interview-guide.md), [test-patterns](tdd/references/test-patterns.md)       |
-| `/fsd`    | [fsd-generator](fsd-generator/SKILL.md) | FSD 슬라이스 스캐폴딩                    | [templates](fsd-generator/references/templates.md), [api-patterns](fsd-generator/references/api-patterns.md) |
-| `/review` | [review](review/SKILL.md)               | 3-Phase 코드 리뷰                        | -                                                                                                            |
-| `/commit` | [commit](commit/SKILL.md)               | 한글 커밋 메시지 자동 생성               | -                                                                                                            |
+| 명령             | 스킬                                    | 설명                                     | 레퍼런스                                                                                                     |
+| ---------------- | --------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `/tdd`           | [tdd](tdd/SKILL.md)                     | 요구사항 기반 TDD 테스트 생성 (Red 단계) | [interview-guide](tdd/references/interview-guide.md), [test-patterns](tdd/references/test-patterns.md)       |
+| `/fsd`           | [fsd-generator](fsd-generator/SKILL.md) | FSD 슬라이스 스캐폴딩                    | [templates](fsd-generator/references/templates.md), [api-patterns](fsd-generator/references/api-patterns.md) |
+| `/review`        | [review](review/SKILL.md)               | 3-Phase 코드 리뷰                        | -                                                                                                            |
+| `/commit`        | [commit](commit/SKILL.md)               | 한글 커밋 메시지 자동 생성               | -                                                                                                            |
+| `/agent-browser` | [agent-browser](agent-browser/SKILL.md) | AI 에이전트 브라우저 자동화              | [commands](agent-browser/references/commands.md), [snapshot-refs](agent-browser/references/snapshot-refs.md) |
 
 ### 자동 활성화
 
@@ -59,6 +60,10 @@
 
 # 커밋
 /commit                            # 커밋 메시지 자동 생성
+
+# 브라우저 자동화
+/agent-browser https://example.com       # URL 열기 & 자동화
+/agent-browser 로그인 폼 테스트          # 작업 설명으로 자동화
 ```
 
 ## 디렉토리 구조
@@ -92,6 +97,20 @@
 ├── vercel-react-best-practices/
 │   ├── SKILL.md
 │   └── rules/                        # 성능 규칙 70+개
+├── agent-browser/
+│   ├── SKILL.md                      # 브라우저 자동화 스킬
+│   ├── references/
+│   │   ├── commands.md               # 전체 명령어 레퍼런스
+│   │   ├── snapshot-refs.md          # Ref 라이프사이클
+│   │   ├── session-management.md     # 세션 관리
+│   │   ├── authentication.md         # 인증 패턴
+│   │   ├── video-recording.md        # 녹화
+│   │   ├── profiling.md              # 성능 프로파일링
+│   │   └── proxy-support.md          # 프록시 설정
+│   └── templates/
+│       ├── form-automation.sh        # 폼 자동화 템플릿
+│       ├── authenticated-session.sh  # 인증 세션 템플릿
+│       └── capture-workflow.sh       # 캡처 워크플로우 템플릿
 └── web-design-guidelines/
     └── SKILL.md
 ```
