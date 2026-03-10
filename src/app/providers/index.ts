@@ -1,4 +1,3 @@
 // Providers
 export { CoreProvider } from './CoreProvider';
 export { QueryProvider } from './QueryProvider';
-export { SessionProvider } from './SessionProvider';

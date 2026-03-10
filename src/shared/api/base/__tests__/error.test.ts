@@ -36,32 +36,6 @@ describe('handleApiError', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
-  it('401 에러 시 signOut 후 로그인 페이지로 리다이렉트한다', async () => {
-    Object.defineProperty(window, 'location', {
-      value: { pathname: '/dashboard', href: '' },
-      writable: true,
-      configurable: true,
-    });
-
-    const error: FetchError = { status: 401, statusText: 'Unauthorized' };
-
-    await expect(handleApiError(error)).rejects.toEqual(error);
-    expect(window.location.href).toBe('/login');
-  });
-
-  it('401 에러지만 이미 로그인 페이지면 리다이렉트하지 않는다', async () => {
-    Object.defineProperty(window, 'location', {
-      value: { pathname: '/login', href: '' },
-      writable: true,
-      configurable: true,
-    });
-
-    const error: FetchError = { status: 401, statusText: 'Unauthorized' };
-
-    await expect(handleApiError(error)).rejects.toEqual(error);
-    expect(window.location.href).toBe('');
-  });
-
   it('403 에러는 콘솔에 access denied를 출력한다', async () => {
     const data = { status: 403, message: 'Forbidden' };
     const error: FetchError = { status: 403, statusText: 'Forbidden', data };

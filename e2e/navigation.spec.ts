@@ -5,9 +5,4 @@ test.describe('Navigation', () => {
     await page.goto('/');
     await expect(page).toHaveURL('/');
   });
-
-  test('Users 페이지로 이동할 수 있다', async ({ page }) => {
-    await page.goto('/users');
-    await expect(page).toHaveURL('/users');
-  });
 });

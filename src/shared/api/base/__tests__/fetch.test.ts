@@ -1,4 +1,4 @@
-import { fetchApi, setupClientAuth } from '../fetch';
+import { fetchApi } from '../fetch';
 
 const mockOkResponse = (data = { data: 'test' }) => ({
   ok: true,
@@ -16,7 +16,6 @@ describe('fetchApi', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
-    setupClientAuth(null);
   });
 
   it('GET 요청을 올바르게 전송한다', async () => {
@@ -72,31 +71,6 @@ describe('fetchApi', () => {
     await expect(fetchApi.get('/api/users')).rejects.toMatchObject({
       status: 500,
     });
-  });
-
-  it('setupClientAuth로 설정한 토큰이 Authorization 헤더에 포함된다', async () => {
-    setupClientAuth('test-token');
-
-    await fetchApi.get('/api/users');
-
-    expect(fetch).toHaveBeenCalledWith(
-      expect.any(String),
-      expect.objectContaining({
-        headers: expect.objectContaining({
-          Authorization: 'Bearer test-token',
-        }),
-      })
-    );
-  });
-
-  it('토큰이 null이면 Authorization 헤더가 포함되지 않는다', async () => {
-    setupClientAuth(null);
-
-    await fetchApi.get('/api/users');
-
-    const callArgs = vi.mocked(fetch).mock.calls[0][1] as RequestInit;
-    const headers = callArgs.headers as Record<string, string>;
-    expect(headers.Authorization).toBeUndefined();
   });
 
   it('PATCH 요청을 올바르게 전송한다', async () => {

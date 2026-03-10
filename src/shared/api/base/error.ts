@@ -22,12 +22,6 @@ export const createFetchError = (status: number, statusText: string, data?: unkn
 export const handleApiError = async (error: FetchError): Promise<never> => {
   const { status, data } = error;
 
-  if (status === 401 && typeof window !== 'undefined' && window.location.pathname !== '/login') {
-    const { signOut } = await import('next-auth/react');
-    await signOut({ redirect: false });
-    window.location.href = '/login';
-  }
-
   if (status === 403) {
     console.error('Access denied:', data);
   }

@@ -24,14 +24,3 @@ vi.mock('next/image', () => ({
     return <img {...props} />;
   },
 }));
-
-// next-auth/react mock
-vi.mock('next-auth/react', () => ({
-  useSession: () => ({ data: null, status: 'unauthenticated' }),
-  signIn: vi.fn(),
-  signOut: vi.fn(),
-  SessionProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
-
-// server-only mock (no-op)
-vi.mock('server-only', () => ({}));

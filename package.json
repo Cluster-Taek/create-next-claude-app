@@ -23,7 +23,6 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:chromium": "playwright test --project=chromium",
-    "mock": "json-server db.json --port 4001",
     "cli:dev": "cd cli && pnpm dev",
     "cli:build": "cd cli && pnpm build",
     "cli:test": "cd cli && node dist/index.js test-project",
@@ -31,20 +30,13 @@
     "cli:publish": "cd cli && pnpm publish --access public"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-query": "^5.90.21",
-    "dayjs": "^1.11.19",
-    "jwt-decode": "^4.0.0",
-    "motion": "^11.18.2",
     "next": "^16.1.6",
-    "next-auth": "^4.24.13",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-hook-form": "^7.71.1",
     "react-icons": "^5.5.0",
     "react-spinners": "^0.17.0",
-    "zod": "^4.3.6",
-    "zustand": "^5.0.11"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",
@@ -76,7 +68,6 @@
     "eslint-plugin-testing-library": "^7.16.0",
     "happy-dom": "^20.6.3",
     "husky": "^9.1.7",
-    "json-server": "^0.17.4",
     "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",

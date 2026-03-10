@@ -1,13 +1,8 @@
 import './globals.css';
-import 'dayjs/locale/ko';
-import dayjs from 'dayjs';
 import { type Metadata } from 'next';
 import localFont from 'next/font/local';
-import { CoreProvider, MODAL_COMPONENTS } from '@/app';
-import { Modal } from '@/features/modal';
+import { CoreProvider } from '@/app';
 import { Footer } from '@/widgets/footer';
-
-dayjs.locale('ko');
 
 const pretendard = localFont({
   src: '../src/fonts/PretendardVariable.woff2',
@@ -34,7 +29,6 @@ export default function RootLayout({
         <CoreProvider>
           <main style={{ flex: 1 }}>{children}</main>
           <Footer />
-          <Modal components={MODAL_COMPONENTS} />
         </CoreProvider>
       </body>
     </html>
