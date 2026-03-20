@@ -1,3 +1,5 @@
+'use client';
+
 import { BarLoader } from 'react-spinners';
 
 export const Spinner = () => {
