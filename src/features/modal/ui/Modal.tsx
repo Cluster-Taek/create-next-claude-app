@@ -60,6 +60,7 @@ export const Modal = ({ components }: ModalProps) => {
             key={`${modalId}-${index}`}
             role="dialog"
             aria-modal="true"
+            aria-label={modalId}
           >
             <div
               className="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-black opacity-48"
