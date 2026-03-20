@@ -65,14 +65,14 @@ describe('useModalStore', () => {
     expect(state.modalPropsMap).toEqual({ 'modal-2': { title: 'B' } });
   });
 
-  it('같은 ID로 openModal을 두 번 호출하면 중복으로 추가된다', () => {
+  it('같은 ID로 openModal을 두 번 호출하면 중복이 방지된다', () => {
     act(() => {
       useModalStore.getState().openModal('modal-1');
       useModalStore.getState().openModal('modal-1');
     });
 
     const state = useModalStore.getState();
-    expect(state.openedModalIds).toEqual(['modal-1', 'modal-1']);
+    expect(state.openedModalIds).toEqual(['modal-1']);
   });
 
   it('closeAllModals로 모든 모달을 닫을 수 있다', () => {
