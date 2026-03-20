@@ -60,10 +60,11 @@ export const Modal = ({ components }: ModalProps) => {
             key={`${modalId}-${index}`}
             role="dialog"
             aria-modal="true"
-            aria-label={modalId}
+            aria-label={modalId.replace(/[-_]/g, ' ')}
           >
             <div
               className="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-black opacity-48"
+              data-testid="modal-backdrop"
               onClick={() => closeModal(modalId)}
               aria-hidden="true"
             />
