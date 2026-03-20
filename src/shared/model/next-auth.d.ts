@@ -1,11 +1,6 @@
 /* @see https://authjs.dev/getting-started/typescript#extend-default-interface-properties */
 
 /**
- * User type definition
- */
-export type UserType = 'ADMIN' | 'USER' | 'GUEST';
-
-/**
  * name, email, image 외에 추가 속성을 정의
  */
 import { type DefaultSession } from 'next-auth';
@@ -15,12 +10,11 @@ declare module 'next-auth' {
     id?: string;
     name?: string;
     image?: string;
-    type?: UserType;
-    brandId?: string;
     accessToken: string;
     refreshToken: string;
   }
   interface Session extends DefaultSession {
     user: User;
+    error?: string;
   }
 }

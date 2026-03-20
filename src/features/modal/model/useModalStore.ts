@@ -22,10 +22,13 @@ export const useModalStore = create<ModalState>((set) => ({
   modalPropsMap: {},
 
   openModal: (id, props) =>
-    set((state) => ({
-      openedModalIds: [...state.openedModalIds, id],
-      modalPropsMap: props ? { ...state.modalPropsMap, [id]: props } : state.modalPropsMap,
-    })),
+    set((state) => {
+      if (state.openedModalIds.includes(id)) return state;
+      return {
+        openedModalIds: [...state.openedModalIds, id],
+        modalPropsMap: props ? { ...state.modalPropsMap, [id]: props } : state.modalPropsMap,
+      };
+    }),
 
   closeModal: (id) =>
     set((state) => ({

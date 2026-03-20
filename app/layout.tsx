@@ -26,11 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${pretendard.className} font-sans`}
-        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
-      >
+    <html lang="ko">
+      <body className={`${pretendard.className} font-sans flex flex-col min-h-screen`}>
         <CoreProvider>
           <main style={{ flex: 1 }}>{children}</main>
           <Footer />
