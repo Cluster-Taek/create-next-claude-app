@@ -76,11 +76,14 @@ export const authOptions: NextAuthOptions = {
       }
 
       // [3] 로그인 이후 토큰 만료 후
-      const { accessToken, refreshToken } = await tokenRefresh(token.refreshToken as string);
-
-      token.accessToken = accessToken;
-      token.refreshToken = refreshToken;
-      token.exp = jwtDecode(accessToken).exp as number;
+      try {
+        const { accessToken, refreshToken } = await tokenRefresh(token.refreshToken as string);
+        token.accessToken = accessToken;
+        token.refreshToken = refreshToken;
+        token.exp = jwtDecode(accessToken).exp as number;
+      } catch {
+        return { ...token, error: 'RefreshTokenError' };
+      }
 
       return token;
     },
