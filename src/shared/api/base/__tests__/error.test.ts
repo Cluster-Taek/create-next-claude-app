@@ -1,18 +1,18 @@
-import { createFetchError, handleApiError, type FetchError } from '../error';
+import { createFetchError, FetchError, handleApiError } from '../error';
 
 describe('createFetchError', () => {
   it('status와 statusText로 에러 객체를 생성한다', () => {
     const error = createFetchError(404, 'Not Found');
 
-    expect(error).toEqual({
-      status: 404,
-      statusText: 'Not Found',
-      data: undefined,
-    });
+    expect(error).toBeInstanceOf(FetchError);
+    expect(error.status).toBe(404);
+    expect(error.statusText).toBe('Not Found');
+    expect(error.data).toBeUndefined();
+    expect(error.message).toBe('404 Not Found');
   });
 
   it('유효한 객체 data를 포함한다', () => {
-    const data = { message: 'User not found' };
+    const data = { status: 404, message: 'User not found' };
     const error = createFetchError(404, 'Not Found', data);
 
     expect(error.data).toEqual(data);
@@ -43,10 +43,15 @@ describe('handleApiError', () => {
       configurable: true,
     });
 
-    const error: FetchError = { status: 401, statusText: 'Unauthorized' };
+    const error = new FetchError(401, 'Unauthorized');
 
-    await expect(handleApiError(error)).rejects.toEqual(error);
-    expect(window.location.href).toBe('/login');
+    // 401 핸들러는 리다이렉트 후 never-resolving Promise를 반환
+    void handleApiError(error);
+
+    // dynamic import + signOut 비동기 작업 완료 대기
+    await vi.waitFor(() => {
+      expect(window.location.href).toBe('/login');
+    });
   });
 
   it('401 에러지만 이미 로그인 페이지면 리다이렉트하지 않는다', async () => {
@@ -56,31 +61,31 @@ describe('handleApiError', () => {
       configurable: true,
     });
 
-    const error: FetchError = { status: 401, statusText: 'Unauthorized' };
+    const error = new FetchError(401, 'Unauthorized');
 
-    await expect(handleApiError(error)).rejects.toEqual(error);
+    await expect(handleApiError(error)).rejects.toBeInstanceOf(FetchError);
     expect(window.location.href).toBe('');
   });
 
   it('403 에러는 콘솔에 access denied를 출력한다', async () => {
     const data = { status: 403, message: 'Forbidden' };
-    const error: FetchError = { status: 403, statusText: 'Forbidden', data };
+    const error = new FetchError(403, 'Forbidden', data);
 
-    await expect(handleApiError(error)).rejects.toEqual(error);
+    await expect(handleApiError(error)).rejects.toBeInstanceOf(FetchError);
     expect(console.error).toHaveBeenCalledWith('Access denied:', data);
   });
 
   it('500 이상 에러는 콘솔에 server error를 출력한다', async () => {
     const data = { status: 502, message: 'Internal' };
-    const error: FetchError = { status: 502, statusText: 'Bad Gateway', data };
+    const error = new FetchError(502, 'Bad Gateway', data);
 
-    await expect(handleApiError(error)).rejects.toEqual(error);
+    await expect(handleApiError(error)).rejects.toBeInstanceOf(FetchError);
     expect(console.error).toHaveBeenCalledWith('Server error:', data);
   });
 
   it('모든 에러는 최종적으로 throw된다', async () => {
-    const error: FetchError = { status: 400, statusText: 'Bad Request' };
+    const error = new FetchError(400, 'Bad Request');
 
-    await expect(handleApiError(error)).rejects.toEqual(error);
+    await expect(handleApiError(error)).rejects.toBeInstanceOf(FetchError);
   });
 });
