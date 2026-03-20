@@ -92,6 +92,9 @@ export const authOptions: NextAuthOptions = {
       if (token.user) {
         session.user = token.user as User;
       }
+      if (token.error) {
+        session.error = token.error as string;
+      }
       return session;
     },
   },
