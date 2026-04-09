@@ -1,5 +1,5 @@
 import { createFetchError, handleApiError } from './error';
-import { type Body, type FetchApi } from './types';
+import { type FetchApi } from './types';
 
 // 클라이언트 토큰 저장소
 let authToken: string | null = null;
@@ -47,7 +47,7 @@ const resolveApiUrl = (url: string): string => {
   return url;
 };
 
-const buildUrl = (url: string, params?: Record<string, unknown>): string => {
+const buildUrl = (url: string, params?: object): string => {
   if (!params || Object.keys(params).length === 0) return url;
 
   const searchParams = new URLSearchParams();
@@ -68,11 +68,10 @@ const buildUrl = (url: string, params?: Record<string, unknown>): string => {
 /**
  * 통합 fetch wrapper
  */
-const request = async <T = object>(method: string, url: string, body?: Body, options?: RequestInit): Promise<T> => {
-  const isServer = typeof window === 'undefined';
+const request = async <T = object>(method: string, url: string, body?: object, options?: RequestInit): Promise<T> => {
   const isGet = method === 'GET';
   const resolvedUrl = resolveApiUrl(url);
-  const requestUrl = isGet ? buildUrl(resolvedUrl, body as Record<string, unknown>) : resolvedUrl;
+  const requestUrl = isGet ? buildUrl(resolvedUrl, body) : resolvedUrl;
   const authHeaders = await getAuthHeaders();
 
   const response = await fetch(requestUrl, {
@@ -83,7 +82,6 @@ const request = async <T = object>(method: string, url: string, body?: Body, opt
       ...authHeaders,
       ...options?.headers,
     },
-    ...(!isServer && { credentials: 'include' }),
     body: !isGet && body ? JSON.stringify(body) : undefined,
   });
 
@@ -92,16 +90,14 @@ const request = async <T = object>(method: string, url: string, body?: Body, opt
     try {
       data = await response.json();
     } catch {
-      // JSON 파싱 실패 시 무시
+      // 에러 응답 body가 JSON이 아닐 수 있음 (예: 502 HTML 페이지, 빈 body).
+      // 파싱 실패가 에러 핸들링을 방해하지 않도록 무시하고 data: undefined로 진행.
+    }
+    /* v8 ignore next -- 서버 전용: happy-dom에서 도달 불가 */
+    if (typeof window === 'undefined') {
+      console.error('Server API error:', { status: response.status, url, method });
     }
     const error = createFetchError(response.status, response.statusText, data);
-
-    /* v8 ignore start -- 서버 전용: happy-dom에서 도달 불가 */
-    if (isServer) {
-      console.error('Server API error:', { status: error.status, url, method });
-      throw error;
-    }
-    /* v8 ignore stop */
     return handleApiError(error);
   }
 

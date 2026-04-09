@@ -12,6 +12,13 @@ describe('createFetchError', () => {
   });
 
   it('유효한 객체 data를 포함한다', () => {
+    const data = { status: 404, message: 'User not found' };
+    const error = createFetchError(404, 'Not Found', data);
+
+    expect(error.data).toEqual(data);
+  });
+
+  it('message 필드만 있는 data도 보존한다', () => {
     const data = { message: 'User not found' };
     const error = createFetchError(404, 'Not Found', data);
 
