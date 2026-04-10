@@ -23,10 +23,14 @@ export const useModalStore = create<ModalState>((set) => ({
 
   openModal: (id, props) =>
     set((state) => {
-      if (state.openedModalIds.includes(id)) return state;
+      const nextPropsMap = props ? { ...state.modalPropsMap, [id]: props } : state.modalPropsMap;
+      // 이미 열려있는 모달은 배열에 중복 추가하지 않되, props는 최신 값으로 갱신한다
+      if (state.openedModalIds.includes(id)) {
+        return { openedModalIds: state.openedModalIds, modalPropsMap: nextPropsMap };
+      }
       return {
         openedModalIds: [...state.openedModalIds, id],
-        modalPropsMap: props ? { ...state.modalPropsMap, [id]: props } : state.modalPropsMap,
+        modalPropsMap: nextPropsMap,
       };
     }),
 

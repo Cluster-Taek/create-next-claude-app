@@ -81,7 +81,8 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = accessToken;
         token.refreshToken = refreshToken;
         token.exp = jwtDecode(accessToken).exp as number;
-      } catch {
+      } catch (e) {
+        console.error('Token refresh failed:', e);
         return { ...token, error: 'RefreshTokenError' };
       }
 
