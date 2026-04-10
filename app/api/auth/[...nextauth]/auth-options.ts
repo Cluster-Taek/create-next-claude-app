@@ -76,11 +76,15 @@ export const authOptions: NextAuthOptions = {
       }
 
       // [3] 로그인 이후 토큰 만료 후
-      const { accessToken, refreshToken } = await tokenRefresh(token.refreshToken as string);
-
-      token.accessToken = accessToken;
-      token.refreshToken = refreshToken;
-      token.exp = jwtDecode(accessToken).exp as number;
+      try {
+        const { accessToken, refreshToken } = await tokenRefresh(token.refreshToken as string);
+        token.accessToken = accessToken;
+        token.refreshToken = refreshToken;
+        token.exp = jwtDecode(accessToken).exp as number;
+      } catch (e) {
+        console.error('Token refresh failed:', e);
+        return { ...token, error: 'RefreshTokenError' };
+      }
 
       return token;
     },
@@ -88,6 +92,9 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token.user) {
         session.user = token.user as User;
+      }
+      if (token.error) {
+        session.error = token.error as string;
       }
       return session;
     },

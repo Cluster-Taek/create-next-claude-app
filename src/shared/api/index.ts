@@ -1,3 +1,3 @@
-export { fetchApi, setupClientAuth, createFetchError } from './base';
+export { fetchApi, setupClientAuth, createFetchError, FetchError } from './base';
 export { getQueryClient } from './getQueryClient';
-export type { FetchApi, FetchError } from './base';
+export type { FetchApi } from './base';

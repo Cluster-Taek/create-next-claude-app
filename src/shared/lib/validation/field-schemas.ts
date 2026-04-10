@@ -13,18 +13,8 @@ export const emailSchema = z
 
 export const passwordSchema = z.string().min(1, VALIDATION_MESSAGES.required('비밀번호'));
 
-export const strictPasswordSchema = z
-  .string()
-  .min(1, VALIDATION_MESSAGES.required('비밀번호'))
-  .regex(REGEX.PASSWORD, VALIDATION_MESSAGES.password.invalid);
-
 export const nameSchema = z
   .string()
   .min(1, VALIDATION_MESSAGES.required('이름'))
   .min(2, VALIDATION_MESSAGES.name.min(2))
   .max(50, VALIDATION_MESSAGES.name.max(50));
-
-export const phoneSchema = z
-  .string()
-  .min(1, VALIDATION_MESSAGES.required('전화번호'))
-  .regex(REGEX.PHONE, VALIDATION_MESSAGES.phone.invalid);
