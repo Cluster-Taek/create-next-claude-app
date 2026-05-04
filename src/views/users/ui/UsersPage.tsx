@@ -10,7 +10,7 @@ export async function UsersPage() {
 
   const queryClient = getQueryClient();
 
-  void queryClient.prefetchQuery(usersQueryOptions({ _page: 1, _per_page: 10 }));
+  await queryClient.prefetchQuery(usersQueryOptions({ _page: 1, _per_page: 10 }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -21,8 +21,7 @@ import { getQueryClient } from '@/shared/api';
 export async function {PascalName}Page() {
   const queryClient = getQueryClient();
 
-  // void: 프리페치 완료를 기다리지 않음 (Suspense가 처리)
-  void queryClient.prefetchQuery(
+  await queryClient.prefetchQuery(
     {camelName}sQueryOptions({ _page: 1, _per_page: 10 })
   );
 
@@ -114,19 +113,26 @@ export const useUpdate{PascalName}Mutation = () => {
     mutationFn: (data: { id: number } & Partial<{PascalName}>) =>
       update{PascalName}(data.id, data),
     onMutate: async (newData) => {
+      // 1. 진행 중인 모든 관련 쿼리 취소
       await queryClient.cancelQueries({ queryKey: ['{camelName}s'] });
 
-      const previous = queryClient.getQueryData<{PascalName}[]>(['{camelName}s']);
+      // 2. 이전 상태 롤백을 위해 저장 (setQueriesData 활용)
+      const previous = queryClient.getQueriesData<{PascalName}[]>({ queryKey: ['{camelName}s'] });
 
-      queryClient.setQueryData<{PascalName}[]>(['{camelName}s'], (old) =>
-        old?.map(item => item.id === newData.id ? { ...item, ...newData } : item)
+      // 3. 연관된 모든 리스트 쿼리 낙관적 업데이트
+      queryClient.setQueriesData<{PascalName}[]>(
+        { queryKey: ['{camelName}s'] },
+        (old) => old?.map(item => item.id === newData.id ? { ...item, ...newData } : item)
       );
 
       return { previous };
     },
     onError: (_err, _data, context) => {
+      // 4. 에러 시 이전 상태로 롤백
       if (context?.previous) {
-        queryClient.setQueryData(['{camelName}s'], context.previous);
+        context.previous.forEach(([queryKey, oldData]) => {
+          queryClient.setQueryData(queryKey, oldData);
+        });
       }
     },
     onSettled: () => {

@@ -26,6 +26,8 @@ pnpm mock && pnpm dev
 | 개발 환경      | ESLint · Prettier · Husky · Commitlint · Steiger       |
 | 빌드           | Turbopack · React Compiler                             |
 
+> Architecture Decision Record: [adr.ko.md](./docs/adr.ko.md)
+
 ## 아키텍처
 
 [Feature-Sliced Design](https://feature-sliced.design) 기반으로 구성되어 있습니다. `app/`은 라우팅만 담당하며, 비즈니스 로직은 `src/` FSD 구조에 위치합니다.
