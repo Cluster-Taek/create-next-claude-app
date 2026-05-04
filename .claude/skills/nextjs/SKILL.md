@@ -180,6 +180,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 | `vercel-react-best-practices` | React 성능 최적화    |
 | `feature-sliced-design`       | 프로젝트 아키텍처    |
 | `fsd-generator`               | 슬라이스 스캐폴딩    |
-| `tdd`                         | 요구사항 기반 테스트 |
+| `spec`                        | 요구사항 기반 Spec/TC 명세 |
 
 **출처**: [secondsky/claude-skills](https://github.com/secondsky/claude-skills) nextjs 스킬 기반, 프로젝트 버전(16.1.6)에 맞게 조정.

@@ -2,6 +2,8 @@
 
 Next.js 16 + Feature-Sliced Design boilerplate and CLI scaffolding tool.
 
+[한국어](./README.ko.md)
+
 ![Hero Banner](./docs/images/hero-banner.png)
 
 ## Quick Start
@@ -62,14 +64,15 @@ cp .env.example .env
 
 This project includes Claude Code skills for the development workflow.
 
-| Manual    | Role                       |     | Auto-activated        | Role               |
-| --------- | -------------------------- | --- | --------------------- | ------------------ |
-| `/tdd`    | Requirements → Tests (Red) |     | nextjs                | Error prevention   |
-| `/fsd`    | FSD scaffolding            |     | react-best-practices  | Performance        |
-| `/review` | Code review                |     | feature-sliced-design | Architecture guard |
-| `/commit` | Commit generation          |     | web-design-guidelines | UI/UX review       |
+| Manual       | Role                          |     | Auto-activated        | Role               |
+| ------------ | ----------------------------- | --- | --------------------- | ------------------ |
+| `/spec`      | Requirements → Spec doc       |     | nextjs                | Error prevention   |
+| `/testcase`  | Spec doc → Test case (TC) doc |     | react-best-practices  | Performance        |
+| `/fsd`       | FSD scaffolding               |     | feature-sliced-design | Architecture guard |
+| `/review`    | Code review                   |     | web-design-guidelines | UI/UX review       |
+| `/commit`    | Commit generation             |     |                       |                    |
 
-**Workflow**: `/tdd` → `/fsd` → Implement → `/review` → `/commit`
+**Workflow**: `/spec` → `/testcase` → `/fsd` → Implement → `/review` → `/commit`
 
 > Details: [.claude/skills/README.md](.claude/skills/README.md)
 

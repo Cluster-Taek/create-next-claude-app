@@ -6,3 +6,12 @@
   --color-primary-01: #0096aa;
   --color-primary-02: #007c8c;
 }
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}

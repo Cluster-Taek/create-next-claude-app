@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { fetchApi } from '@/shared/api';
 import { type User, type UsersParams, type UserCreateFormValues, userSchema } from '../model/schemas';
 
@@ -6,8 +7,7 @@ import { type User, type UsersParams, type UserCreateFormValues, userSchema } fr
  */
 export const fetchUsers = async (params: UsersParams): Promise<User[]> => {
   const response = await fetchApi.get<User[]>(`/api/users`, params);
-  // return pageableSchema(userSchema).parse(response);
-  return response;
+  return z.array(userSchema).parse(response);
 };
 
 /**

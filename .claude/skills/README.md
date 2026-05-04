@@ -3,7 +3,7 @@
 이 프로젝트에 구성된 Claude Code 스킬 목록과 사용법.
 
 <!-- IMAGE: 스킬 연결 관계도 -->
-<!-- /tdd → /fsd → 구현 → /review → /commit 파이프라인 -->
+<!-- /spec → /testcase → /fsd → 구현 → /review → /commit 파이프라인 -->
 <!-- 자동 활성화 스킬이 각 단계에 연결되는 다이어그램 -->
 
 ## 스킬 목록
@@ -12,7 +12,8 @@
 
 | 명령             | 스킬                                    | 설명                                     | 레퍼런스                                                                                                     |
 | ---------------- | --------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `/tdd`           | [tdd](tdd/SKILL.md)                     | 요구사항 기반 TDD 테스트 생성 (Red 단계) | [interview-guide](tdd/references/interview-guide.md), [test-patterns](tdd/references/test-patterns.md)       |
+| `/spec`          | [spec](spec/SKILL.md)                   | 요구사항 → Spec 문서 생성                | [interview-guide](spec/references/interview-guide.md), [spec-template](spec/references/spec-template.md) |
+| `/testcase`      | [testcase](testcase/SKILL.md)           | Spec 문서 → TC 명세서 생성               | [tc-template](testcase/references/tc-template.md)                                                            |
 | `/fsd`           | [fsd-generator](fsd-generator/SKILL.md) | FSD 슬라이스 스캐폴딩                    | [templates](fsd-generator/references/templates.md), [api-patterns](fsd-generator/references/api-patterns.md) |
 | `/review`        | [review](review/SKILL.md)               | 3-Phase 코드 리뷰                        | -                                                                                                            |
 | `/commit`        | [commit](commit/SKILL.md)               | 한글 커밋 메시지 자동 생성               | -                                                                                                            |
@@ -32,22 +33,26 @@
 ### Full Cycle (새 기능 개발)
 
 ```
-/tdd → /fsd → 구현 → /review → /commit
+/spec → /testcase → /fsd → 구현 → /review → /commit
 ```
 
-1. **`/tdd`** — 요구사항에서 실패하는 테스트 작성
-2. **`/fsd feature {name}`** — FSD 슬라이스 구조 생성
-3. **구현** — nextjs, react-best-practices 스킬이 자동 지원
-4. **`/review`** — 코드 리뷰
-5. **`/commit`** — 커밋
+1. **`/spec`** — 요구사항 → Spec 문서 작성
+2. **`/testcase`** — Spec 문서 → TC 명세서 작성
+3. **`/fsd feature {name}`** — FSD 슬라이스 구조 생성
+4. **구현** — nextjs, react-best-practices 스킬이 자동 지원
+5. **`/review`** — 코드 리뷰
+6. **`/commit`** — 커밋
 
 ### 사용 예시
 
 ```bash
-# 요구사항에서 테스트 생성
-/tdd                              # 대화형 인터뷰
-/tdd docs/specs/payment.md        # 스펙 문서
-/tdd #42                          # Linear 이슈
+# 요구사항 → Spec 문서
+/spec                              # 대화형 인터뷰
+/spec docs/requirements/payment.md # 자연어/Gherkin 파일
+
+# Spec 문서 → TC 명세서
+/testcase                          # 디렉토리 스캔 후 선택
+/testcase docs/spec/payment.spec.md
 
 # FSD 슬라이스 생성
 /fsd feature auth-login            # 기본 세그먼트 (ui, model)
@@ -75,11 +80,15 @@
 │   └── SKILL.md
 ├── review/
 │   └── SKILL.md
-├── tdd/
+├── spec/
 │   ├── SKILL.md
 │   └── references/
-│       ├── interview-guide.md        # 대화형 인터뷰 가이드
-│       └── test-patterns.md          # 테스트 템플릿
+│       ├── interview-guide.md        # 대화형 요구사항 인터뷰 가이드
+│       └── spec-template.md          # Spec 문서 템플릿 및 작성 규칙
+├── testcase/
+│   ├── SKILL.md
+│   └── references/
+│       └── tc-template.md            # TC 명세서 템플릿 및 ID 규칙
 ├── fsd-generator/
 │   ├── SKILL.md
 │   └── references/
