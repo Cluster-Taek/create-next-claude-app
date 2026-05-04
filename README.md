@@ -28,6 +28,8 @@ pnpm mock && pnpm dev
 | DX           | ESLint · Prettier · Husky · Commitlint · Steiger       |
 | Build        | Turbopack · React Compiler                             |
 
+> Architecture Decision Record: [adr.md](./docs/adr.md)
+
 ## Architecture
 
 Built on [Feature-Sliced Design](https://feature-sliced.design). `app/` handles routing only; business logic lives in the `src/` FSD structure.
@@ -64,13 +66,13 @@ cp .env.example .env
 
 This project includes Claude Code skills for the development workflow.
 
-| Manual       | Role                          |     | Auto-activated        | Role               |
-| ------------ | ----------------------------- | --- | --------------------- | ------------------ |
-| `/spec`      | Requirements → Spec doc       |     | nextjs                | Error prevention   |
-| `/testcase`  | Spec doc → Test case (TC) doc |     | react-best-practices  | Performance        |
-| `/fsd`       | FSD scaffolding               |     | feature-sliced-design | Architecture guard |
-| `/review`    | Code review                   |     | web-design-guidelines | UI/UX review       |
-| `/commit`    | Commit generation             |     |                       |                    |
+| Manual      | Role                          |     | Auto-activated        | Role               |
+| ----------- | ----------------------------- | --- | --------------------- | ------------------ |
+| `/spec`     | Requirements → Spec doc       |     | nextjs                | Error prevention   |
+| `/testcase` | Spec doc → Test case (TC) doc |     | react-best-practices  | Performance        |
+| `/fsd`      | FSD scaffolding               |     | feature-sliced-design | Architecture guard |
+| `/review`   | Code review                   |     | web-design-guidelines | UI/UX review       |
+| `/commit`   | Commit generation             |     |                       |                    |
 
 **Workflow**: `/spec` → `/testcase` → `/fsd` → Implement → `/review` → `/commit`
 
