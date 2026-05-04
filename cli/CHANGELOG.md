@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/Cluster-Taek/create-next-claude-app/compare/v1.6.0...v1.6.1) (2026-05-04)
+
+### Bug Fixes
+
+* hydration 관련 안티패턴 이슈 수정 ([54767b7](https://github.com/Cluster-Taek/create-next-claude-app/commit/54767b709d83631688380b65f53ec55d95a39dfe))
+
+### Documentation
+
+* docs 업데이트 ([844d90a](https://github.com/Cluster-Taek/create-next-claude-app/commit/844d90a9ecb2e3c44a52d13fe3210c9cbd48b60d))
+
 ## [1.6.0](https://github.com/Cluster-Taek/create-next-claude-app/compare/v1.5.0...v1.6.0) (2026-05-04)
 
 ### Features
